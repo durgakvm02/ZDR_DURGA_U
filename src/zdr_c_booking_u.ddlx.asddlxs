@@ -1,0 +1,113 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+    typeName: 'Booking',
+    typeNamePlural: 'Bookings',
+    title: {
+        type: #STANDARD,
+        label: 'Booking',
+        value: 'BookingId'
+    }
+}
+
+annotate view ZDR_C_BOOKING_U with {
+    @UI.facet: [{
+        id: 'Booking',
+        purpose: #STANDARD,
+        position: 10 ,
+        label: 'Booking',
+        type: #IDENTIFICATION_REFERENCE
+    }]
+
+    @Search.defaultSearchElement: true
+    TravelId;
+
+    @UI: {
+        lineItem: [{ position: 20, importance: #HIGH }],
+        identification: [{ position: 20 }]
+    }
+    BookingId;
+
+    @UI: {
+        lineItem: [{ position: 30, importance: #HIGH  }],
+        identification: [{ position: 30 }]
+    }
+    BookingDate;
+
+    @UI: {
+        lineItem: [{ position: 40, importance: #HIGH }],
+        identification: [{ position: 40 }]
+    }
+    @Consumption.valueHelpDefinition: [{ entity: { name: '/DMO/I_CUSTOMER', element: 'CustomerID' } }]
+    CustomerId;
+
+    @Consumption.valueHelpDefinition: [{ entity: { name: '/DMO/I_CARRIER', element: 'AirlinrId' } }]
+    @UI: {
+        lineItem: [{ position: 50, importance: #HIGH }],
+        identification: [{ position: 50 }]
+    }
+    AirlineId;
+
+    @UI: {
+        lineItem: [{ position: 60, importance: #HIGH }],
+        identification: [{ position: 60 }]
+    }
+    @Consumption.valueHelpDefinition: [{ entity: {
+                                                name: '/Dmo/I_Flight',
+                                                element: 'ConnectionID'
+                                            } ,
+                                            additionalBinding: [{ element: 'ConnectionID',
+                                            localElement: 'ConnectionId' },
+                                            { element: 'AirlinrID',
+                                            localElement: 'AirlineId' },
+                                            { element: 'CurrencyCode',
+                                            localElement: 'CurrencyCode' },
+                                            { element: 'Price',
+                                            localElement: 'FlightPrice' }]}]
+    ConnectionId;
+
+    @UI: {
+        lineItem: [{ position: 70 }],
+        identification: [{ position: 70 }]
+    }
+     @Consumption.valueHelpDefinition: [{ entity: {
+                                                name: '/Dmo/I_Flight',
+                                                element: 'FlightDate'
+                                            } ,
+                                            additionalBinding: [{ element: 'FlightDate',
+                                            localElement: 'FlightDate' },
+                                            { element: 'AirlinrID',
+                                            localElement: 'AirlineId' },
+                                            { element: 'CurrencyCode',
+                                            localElement: 'CurrencyCode' },
+                                            { element: 'Price',
+                                            localElement: 'FlightPrice' }]}]
+    FlightDate;
+
+    // Required fields based on the user request.
+    // Ensure these fields exist in your underlying projection view.
+
+    @UI: {
+        lineItem: [{ position: 80 }],
+        identification: [{ position: 80 }]
+    }
+    FlightPrice;
+
+//    @UI: {
+//        lineItem: [{ position: 90 }],
+//        identification: [{ position: 90 }]
+//    }
+@Consumption.valueHelpDefinition: [{ entity: {
+                                                name: 'I_Currency',
+                                                element: 'Currency'
+                                            } }]
+    CurrencyCode;
+
+    /* Associations */
+    // Ensure these associations are correctly defined in your underlying CDS view definition
+    // (e.g., in ZDR_I_BOOKING_U or the standard interface view it projects from).
+    // _CARRIER;
+    // _CONNECTION;
+    // _Customer;
+    // _travel;
+    // _Flight; // <-- This association is likely needed to access flight-specific details if not already present.
+}

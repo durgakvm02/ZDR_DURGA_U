@@ -1,0 +1,5 @@
+@EndUserText.label: 'SERVICE DEFINITION UNMANAGED'
+define service ZDR_TRAVEL_U {
+  expose ZDR_C_TRAVEL_U;
+  expose ZDR_C_BOOKING_U;
+}
